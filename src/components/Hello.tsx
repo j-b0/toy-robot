@@ -1,11 +1,7 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
-
 const Hello = () => {
-  const { user } = useUser();
-
-  return <p>👋 Hello {user?.primaryEmailAddress?.toString()}</p>;
+  return <p>👋 Hello </p>;
 };
 
 export { Hello };
