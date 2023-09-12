@@ -99,7 +99,7 @@ const Robot = ({ gridCells }: { gridCells: number }) => {
         updatePositionY(positionY - 1);
         break;
       case Direction.East:
-        if (positionX === maxCell) {
+        if (positionX === 0) {
           // eslint-disable-next-line no-alert
           alert(ALERT_MESSAGE);
           return;
@@ -107,7 +107,7 @@ const Robot = ({ gridCells }: { gridCells: number }) => {
         updatePositionX(positionX - 1);
         break;
       case Direction.West:
-        if (positionX === 0) {
+        if (positionX === maxCell) {
           // eslint-disable-next-line no-alert
           alert(ALERT_MESSAGE);
           return;
