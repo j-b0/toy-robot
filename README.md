@@ -9,6 +9,13 @@ This repo is for a toy robot that operates on a 5x5 grid. This includes UI to up
 - Guarding where user is unable and will be alerted when trying to push robot off grid. 
 
 
+
+
+https://github.com/j-b0/toy-robot/assets/47814145/9912790f-305b-42ff-bd74-8af8e01e8cea
+
+
+
+
 ## Getting started
 
 1. Clone Repo and install npm packages
