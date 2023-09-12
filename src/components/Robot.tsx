@@ -7,8 +7,8 @@ const ALERT_MESSAGE = 'Dont push me of the edge plzz 🙏';
 enum Direction {
   North = 'North',
   East = 'East',
-  West = 'West',
   South = 'South',
+  West = 'West',
 }
 
 const Robot = ({ gridCells }: { gridCells: number }) => {
@@ -64,7 +64,7 @@ const Robot = ({ gridCells }: { gridCells: number }) => {
 
   const updatePositionX = (x: number) => {
     // Bail early if new value is negetive or past max number of grid items
-    if (x > gridCells || x < 0) {
+    if (x > gridCells - 1 || x < 0) {
       // eslint-disable-next-line no-alert
       alert(ALERT_MESSAGE);
       return;
@@ -74,7 +74,7 @@ const Robot = ({ gridCells }: { gridCells: number }) => {
 
   const updatePositionY = (y: number) => {
     // Bail early if new value is negetive or past max number of grid items
-    if (y > gridCells || y < 0) {
+    if (y > gridCells - 1 || y < 0) {
       // eslint-disable-next-line no-alert
       alert(ALERT_MESSAGE);
       return;
@@ -212,12 +212,17 @@ const Robot = ({ gridCells }: { gridCells: number }) => {
       <div
         className="m-10  grid h-96 w-96 rotate-180 gap-1"
         style={{ gridTemplateColumns: `repeat(${gridCells}, minmax(0, 1fr)` }}
+        role="grid"
       >
         {Array.from({ length: gridCells * gridCells }, (_, i) => i).map((x) => (
           <div
             /* Give custom background colour if slected */
             className={x === selectedCell ? 'bg-sky-500/80' : 'bg-sky-500/20'}
+            /* Helpful for accessability and testingx */
+            aria-selected={x === selectedCell}
+            aria-label="Square in grid"
             key={x}
+            role="gridcell"
           />
         ))}
       </div>
