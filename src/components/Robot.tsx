@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-const GRID_SQUARES = 5;
-
 const ALERT_MESSAGE = 'Dont push me of the edge plzz 🙏';
 
 enum Direction {
@@ -13,15 +11,14 @@ enum Direction {
   South = 'South',
 }
 
-const Robot = () => {
+const Robot = ({ gridCells }: { gridCells: number }) => {
   const [positionX, setPositionX] = useState(0);
   const [positionY, setPositionY] = useState(0);
-  const [direction, setDirection] = useState(Direction.East);
+  const [direction, setDirection] = useState(Direction.North);
 
-  const selectedCell = positionY * GRID_SQUARES + positionX;
+  const selectedCell = positionY * gridCells + positionX;
 
-  const gridClass = `grid-cols-${GRID_SQUARES}`;
-
+  // Shifts Direction of robot counter clockwise
   const handleLeft = () => {
     switch (direction) {
       case Direction.East:
@@ -43,6 +40,7 @@ const Robot = () => {
     }
   };
 
+  // Shifts Direction of robot counter anti clockwise
   const handleRight = () => {
     switch (direction) {
       case Direction.East:
@@ -65,7 +63,8 @@ const Robot = () => {
   };
 
   const updatePositionX = (x: number) => {
-    if (x > GRID_SQUARES || x < 0) {
+    // Bail early if new value is negetive or past max number of grid items
+    if (x > gridCells || x < 0) {
       // eslint-disable-next-line no-alert
       alert(ALERT_MESSAGE);
       return;
@@ -74,7 +73,8 @@ const Robot = () => {
   };
 
   const updatePositionY = (y: number) => {
-    if (y > GRID_SQUARES || y < 0) {
+    // Bail early if new value is negetive or past max number of grid items
+    if (y > gridCells || y < 0) {
       // eslint-disable-next-line no-alert
       alert(ALERT_MESSAGE);
       return;
@@ -87,7 +87,8 @@ const Robot = () => {
   };
 
   const move = () => {
-    const maxCell = GRID_SQUARES - 1;
+    // To allow for 0 based value
+    const maxCell = gridCells - 1;
     switch (direction) {
       case Direction.South:
         if (positionY === 0) {
@@ -95,7 +96,7 @@ const Robot = () => {
           alert(ALERT_MESSAGE);
           return;
         }
-        setPositionY(positionY - 1);
+        updatePositionY(positionY - 1);
         break;
       case Direction.East:
         if (positionX === maxCell) {
@@ -103,7 +104,7 @@ const Robot = () => {
           alert(ALERT_MESSAGE);
           return;
         }
-        setPositionX(positionX + 1);
+        updatePositionX(positionX - 1);
         break;
       case Direction.West:
         if (positionX === 0) {
@@ -111,7 +112,7 @@ const Robot = () => {
           alert(ALERT_MESSAGE);
           return;
         }
-        setPositionX(positionX - 1);
+        updatePositionX(positionX + 1);
         break;
 
       // North
@@ -121,7 +122,7 @@ const Robot = () => {
           alert(ALERT_MESSAGE);
           return;
         }
-        setPositionY(positionY + 1);
+        updatePositionY(positionY + 1);
         break;
     }
   };
@@ -208,15 +209,17 @@ const Robot = () => {
         report
       </button>
 
-      <div className={`m-10  grid h-96 w-96 rotate-180 gap-4 ${gridClass}`}>
-        {Array.from({ length: GRID_SQUARES * GRID_SQUARES }, (_, i) => i).map(
-          (x) => (
-            <div
-              className={x === selectedCell ? 'bg-sky-500/80' : 'bg-sky-500/20'}
-              key={x}
-            />
-          ),
-        )}
+      <div
+        className="m-10  grid h-96 w-96 rotate-180 gap-1"
+        style={{ gridTemplateColumns: `repeat(${gridCells}, minmax(0, 1fr)` }}
+      >
+        {Array.from({ length: gridCells * gridCells }, (_, i) => i).map((x) => (
+          <div
+            /* Give custom background colour if slected */
+            className={x === selectedCell ? 'bg-sky-500/80' : 'bg-sky-500/20'}
+            key={x}
+          />
+        ))}
       </div>
     </div>
   );

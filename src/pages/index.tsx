@@ -1,5 +1,7 @@
 import { Robot } from '@/components/Robot';
 
+const GRID_CELLS = 5;
+
 const Index = () => {
   return (
     <div className="flex h-screen">
@@ -7,7 +9,8 @@ const Index = () => {
         <h1 className="mb-4 text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-3xl lg:text-4xl	">
           ✨Jack Burns&apos;s Mr Yum Take Home✨
         </h1>
-        <Robot />
+        {/* Render the magic ✨🤖 */}
+        <Robot gridCells={GRID_CELLS} />
       </div>
     </div>
   );
